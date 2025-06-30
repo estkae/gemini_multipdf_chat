@@ -6,3 +6,8 @@ PyPDF2
 chromadb
 faiss-cpu
 langchain_google_genai
+python-docx
+langchain-community
+pytesseract
+pillow
+pdf2image

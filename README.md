@@ -7,8 +7,15 @@ Gemini PDF Chatbot is a Streamlit-based application that allows users to chat wi
 
 ## Features
 
-- **PDF Upload:** Users can upload multiple PDF files.
-- **Text Extraction:** Extracts text from uploaded PDF files.
+- **Multiple Input Methods:** 
+  - Upload multiple files directly (PDF, TXT, DOCX, DOC, PNG, JPG, JPEG, TIFF, BMP)
+  - Specify a folder path to process all supported files in that directory
+- **Multi-Format Support:** Supports PDF, TXT, DOCX, DOC, and image formats (PNG, JPG, JPEG, TIFF, BMP).
+- **OCR Support:** 
+  - Automatic OCR for scanned PDFs and images
+  - Fallback to OCR when regular text extraction fails
+  - Supports English and German text recognition
+- **Text Extraction:** Extracts text from all supported document types with intelligent OCR fallback.
 - **Conversational AI:** Uses the Gemini conversational AI model to answer user questions.
 - **Chat Interface:** Provides a chat interface to interact with the chatbot.
 
@@ -51,6 +58,24 @@ Follow these instructions to set up and run this project on your local machine.
 
    **Note:** This project requires Python 3.10 or higher.
 
+### Prerequisites for OCR
+
+The OCR functionality requires Tesseract to be installed on your system:
+
+- **Ubuntu/Debian:** `sudo apt-get install tesseract-ocr tesseract-ocr-deu`
+- **macOS:** `brew install tesseract`
+- **Windows:** Download and install from [GitHub](https://github.com/UB-Mannheim/tesseract/wiki)
+
+For PDF to image conversion (required for OCR on scanned PDFs):
+- **Ubuntu/Debian:** `sudo apt-get install poppler-utils`
+- **macOS:** `brew install poppler`
+- **Windows:** 
+  1. Download the latest release from [poppler-windows](https://github.com/oschwartz10612/poppler-windows/releases/)
+  2. Extract the archive to a folder (e.g., `C:\poppler`)
+  3. Add `C:\poppler\Library\bin` to your system PATH environment variable
+  4. Restart your terminal/command prompt
+  - **Alternative for Conda users:** `conda install -c conda-forge poppler`
+
 1. **Clone the Repository:**
 
    ```bash
@@ -73,12 +98,13 @@ Follow these instructions to set up and run this project on your local machine.
 4. **Run the Application:**
 
    ```bash
-   streamlit run main.py
+   streamlit run app.py
    ```
 
-5. **Upload PDFs:**
-   - Use the sidebar to upload PDF files.
-   - Click on "Submit & Process" to extract text and generate embeddings.
+5. **Add Documents:**
+   - **Option 1 - Upload Files:** Use the "Upload Files" tab in the sidebar to upload PDF, TXT, DOCX, or DOC files.
+   - **Option 2 - Select Folder:** Use the "Select Folder" tab to specify a folder path containing your documents.
+   - Click on "Process Uploaded Files" or "Process Folder" to extract text and generate embeddings.
 
 6. **Chat Interface:**
    - Chat with the AI in the main interface.
@@ -94,6 +120,7 @@ Follow these instructions to set up and run this project on your local machine.
 
 - PyPDF2
 - langchain
+- python-docx
 - Streamlit
 - google.generativeai
 - dotenv
