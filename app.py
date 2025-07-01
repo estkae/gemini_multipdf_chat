@@ -1,11 +1,11 @@
 import os
 from PyPDF2 import PdfReader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 import streamlit as st
-import google.generativeai as genai
+from anthropic import Anthropic
 from langchain.vectorstores import FAISS
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_anthropic import ChatAnthropic
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
@@ -19,8 +19,7 @@ import io
 import tempfile
 
 load_dotenv()
-os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
 
 # OCR functions
 def perform_ocr_on_image(image):
@@ -192,8 +191,9 @@ def get_text_chunks(text):
 
 
 def get_vector_store(chunks):
-    embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001")  # type: ignore
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
     vector_store = FAISS.from_texts(chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
 
@@ -208,10 +208,12 @@ def get_conversational_chain():
     Answer:
     """
 
-    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash",
-                                   client=genai,
-                                   temperature=0.3,
-                                   )
+    model = ChatAnthropic(
+        model="claude-3-5-sonnet-20241022",
+        anthropic_api_key=anthropic_api_key,
+        temperature=0.3,
+        max_tokens=4096
+    )
     prompt = PromptTemplate(template=prompt_template,
                             input_variables=["context", "question"])
     chain = load_qa_chain(llm=model, chain_type="stuff", prompt=prompt)
@@ -224,8 +226,9 @@ def clear_chat_history():
 
 
 def user_input(user_question):
-    embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001")  # type: ignore
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
 
     new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True) 
     docs = new_db.similarity_search(user_question)
@@ -241,7 +244,7 @@ def user_input(user_question):
 
 def main():
     st.set_page_config(
-        page_title="Gemini Document Chatbot",
+        page_title="Claude Document Chatbot",
         page_icon="🤖"
     )
 
@@ -289,7 +292,7 @@ def main():
                     st.error("Please enter a folder path")
 
     # Main content area for displaying chat messages
-    st.title("Chat with Documents using Gemini🤖")
+    st.title("Chat with Documents using Claude Sonnet 🤖")
     st.write("Welcome to the chat!")
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
 

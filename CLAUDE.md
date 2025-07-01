@@ -19,8 +19,8 @@ pip install -r requirements.txt
 # Copy the example env file
 cp .env.example .env
 
-# Edit .env and add your Google API key
-# GOOGLE_API_KEY=your_actual_api_key_here
+# Edit .env and add your Anthropic API key
+# ANTHROPIC_API_KEY=your_actual_api_key_here
 ```
 
 ### Running the Application
@@ -66,13 +66,13 @@ mypy app.py
    - Text is split into 10,000 character chunks with 1,000 character overlap
 
 2. **Vector Storage** (`get_vector_store`):
-   - Google's embedding-001 model creates embeddings for each chunk
+   - HuggingFace's all-MiniLM-L6-v2 model creates embeddings for each chunk
    - FAISS stores embeddings locally in `faiss_index/` directory
    - Embeddings enable semantic search across PDF content
 
 3. **Question Answering** (`user_input`, `get_conversational_chain`):
    - User questions trigger similarity search in FAISS
-   - Retrieved chunks provide context to Gemini Pro model
+   - Retrieved chunks provide context to Claude 3.5 Sonnet model
    - Custom prompt template ensures answers stay within PDF context
    - Chat history maintained in Streamlit session state
 
@@ -90,9 +90,10 @@ mypy app.py
 
 ### Dependencies
 - **streamlit**: Web UI framework
-- **google-generativeai**: Google's Gemini API client
+- **anthropic**: Anthropic's Claude API client
 - **langchain**: LLM application framework
-- **langchain_google_genai**: LangChain's Google integration
+- **langchain-anthropic**: LangChain's Anthropic integration
+- **sentence-transformers**: HuggingFace embeddings
 - **PyPDF2**: PDF text extraction
 - **faiss-cpu**: Vector similarity search
 - **chromadb**: Alternative vector DB (imported but not used)

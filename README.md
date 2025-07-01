@@ -1,6 +1,6 @@
-# Gemini PDF Chatbot
+# Claude PDF Chatbot
 
-Gemini PDF Chatbot is a Streamlit-based application that allows users to chat with a conversational AI model trained on PDF documents. The chatbot extracts information from uploaded PDF files and answers user questions based on the provided context.
+Claude PDF Chatbot is a Streamlit-based application that allows users to chat with Claude Sonnet, Anthropic's conversational AI model, trained on PDF documents. The chatbot extracts information from uploaded PDF files and answers user questions based on the provided context.
 <https://gmultichat.streamlit.app/>
 
 <https://github.com/kaifcoder/gemini_multipdf_chat/assets/57701861/f6a841af-a92d-4e54-a4fd-4a52117e17f6>
@@ -16,17 +16,17 @@ Gemini PDF Chatbot is a Streamlit-based application that allows users to chat wi
   - Fallback to OCR when regular text extraction fails
   - Supports English and German text recognition
 - **Text Extraction:** Extracts text from all supported document types with intelligent OCR fallback.
-- **Conversational AI:** Uses the Gemini conversational AI model to answer user questions.
+- **Conversational AI:** Uses Claude 3.5 Sonnet, Anthropic's advanced AI model, to answer user questions.
 - **Chat Interface:** Provides a chat interface to interact with the chatbot.
 
 ## Getting Started
 
 If you have docker installed, you can run the application using the following command:
 
-- Obtain a Google API key and set it in the `.env` file.
+- Obtain an Anthropic API key and set it in the `.env` file.
 
    ```.env
-   GOOGLE_API_KEY=your_api_key_here
+   ANTHROPIC_API_KEY=your_api_key_here
    ```
 
 ```bash
@@ -79,7 +79,7 @@ For PDF to image conversion (required for OCR on scanned PDFs):
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/your-username/gemini-pdf-chatbot.git
+   git clone https://github.com/your-username/claude-pdf-chatbot.git
    ```
 
 2. **Install Dependencies:**
@@ -88,11 +88,11 @@ For PDF to image conversion (required for OCR on scanned PDFs):
    pip install -r requirements.txt
    ```
 
-3. **Set up Google API Key:**
-   - Obtain a Google API key and set it in the `.env` file.
+3. **Set up Anthropic API Key:**
+   - Obtain an Anthropic API key and set it in the `.env` file.
 
    ```bash
-   GOOGLE_API_KEY=your_api_key_here
+   ANTHROPIC_API_KEY=your_api_key_here
    ```
 
 4. **Run the Application:**
@@ -122,10 +122,11 @@ For PDF to image conversion (required for OCR on scanned PDFs):
 - langchain
 - python-docx
 - Streamlit
-- google.generativeai
+- anthropic
+- sentence-transformers
 - dotenv
 
 ## Acknowledgments
 
-- [Google Gemini](https://ai.google.com/): For providing the underlying language model.
+- [Anthropic Claude](https://www.anthropic.com/): For providing the Claude 3.5 Sonnet language model.
 - [Streamlit](https://streamlit.io/): For the user interface framework.

@@ -1,11 +1,12 @@
 streamlit
-google-generativeai
+anthropic
 python-dotenv
 langchain
 PyPDF2
 chromadb
 faiss-cpu
-langchain_google_genai
+langchain-anthropic
+sentence-transformers
 python-docx
 langchain-community
 pytesseract
